@@ -1,0 +1,15 @@
+# VM images & disks
+*.vmdk *.vmx *.nvram *.vmsd *.vmsn *.vmss *.vmem *.ova *.ovf *.iso *.qcow2
+Snapshots/
+
+# Secrets & configs
+.env *.env .env.* *.pem *.key *.p12 *.pfx
+secrets/ credentials/ config.local.*
+
+# Raw captures & logs
+*.pcap *.pcapng *.evtx *.log
+logs/
+
+# OS / editor
+.DS_Store Thumbs.db desktop.ini
+.vscode/ .idea/ *.swp
