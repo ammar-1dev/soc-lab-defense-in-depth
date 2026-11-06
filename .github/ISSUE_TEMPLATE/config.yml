@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: سياسة الأمن والإفصاح
+    url: https://github.com/ammar-1dev/soc-lab-defense-in-depth/blob/main/SECURITY.md
+    about: اقرأ سياسة الإفصاح قبل الإبلاغ عن أي معلومة حساسة.

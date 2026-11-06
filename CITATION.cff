@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you reference this work, please cite it as below."
+title: "SOC Lab - Defense in Depth: Design, Implementation and Validation of a Multi-Layer Security Operations Centre"
+abstract: "Documentation of an isolated SOC laboratory comprising six virtual machines across three segregated network segments, protected by seven defence layers and instrumented with fourteen custom network detection signatures. Five authorised attack scenarios were executed and all five produced their declared detection artefacts. Findings are mapped to MITRE ATT&CK and cross-referenced to ISO/IEC 27001:2022, PCI DSS v4.0 and CIS Controls v8.1."
+type: dataset
+version: 2.0.0
+date-released: "2026-11-06"
+license: MIT
+repository-code: "https://github.com/ammar-1dev/soc-lab-defense-in-depth"
+url: "https://github.com/ammar-1dev/soc-lab-defense-in-depth"
+authors:
+  - name: "LAYERS Technical Series"
+keywords:
+  - security operations centre
+  - defense in depth
+  - detection engineering
+  - network segmentation
+  - SIEM
+  - MITRE ATT&CK
+  - ISO 27001
+  - CIS Controls
+  - PCI DSS
+  - blue team
+identifiers:
+  - type: other
+    value: LAYERS-SOC-001
+    description: Project document identifier

@@ -1,149 +1,223 @@
 <div align="center">
 
-<img src="docs/social-preview.png" width="860" alt="LAYERS — SOC Lab">
+<img src="docs/social-preview.png" width="860" alt="LAYERS — SOC Lab: Defense in Depth">
 
-### طبقات · LAYERS — EP. 01
+# مختبر مركز عمليات أمنية — الدفاع متعدد الطبقات
 
-# SOC Lab — Defense in Depth
-## مختبر مركز عمليات أمنية متعدد الطبقات
+### تصميم وتنفيذ والتحقق من مركز عمليات أمنية متعدد الطبقات
 
-**بنينا شركة وهمية. ثم هاجمناها.**
-*We built a fake company. Then we attacked it.*
+**طبقات · LAYERS — الحلقة 01**
 
-![VMware](https://img.shields.io/badge/VMware-607078?style=flat-square&logo=vmware&logoColor=white)
-![pfSense](https://img.shields.io/badge/pfSense-212121?style=flat-square&logo=pfsense&logoColor=white)
-![Snort](https://img.shields.io/badge/Snort-EF3B2D?style=flat-square)
-![Splunk](https://img.shields.io/badge/Splunk-000000?style=flat-square&logo=splunk&logoColor=white)
-![Wazuh](https://img.shields.io/badge/Wazuh-3585F9?style=flat-square)
-![MITRE](https://img.shields.io/badge/MITRE%20ATT%26CK-E0A03C?style=flat-square)
-![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
+![Status](https://img.shields.io/badge/Status-Validated-2E7D32?style=flat-square)
+![Environment](https://img.shields.io/badge/Environment-Isolated%20Lab-607078?style=flat-square)
+![Docs](https://img.shields.io/badge/Technical%20Docs-EN-B3321F?style=flat-square)
+![License](https://img.shields.io/badge/License-MIT-14120F?style=flat-square)
 
 </div>
 
 ---
 
-## ما هذا؟ · What is this?
+## بطاقة الوثيقة
 
-مختبر متكامل لمركز عمليات أمنية داخل VMware يحاكي شبكة شركة حقيقية:
-**6 أجهزة** موزّعة على **3 شبكات مفصولة**، محمية بـ **7 طبقات دفاع**،
-اختبرناها بـ **5 سيناريوهات هجوم** موثّقة.
+| الحقل | القيمة |
+|:---|:---|
+| **معرّف الوثيقة** | `LAYERS-SOC-001` |
+| **نوع الوثيقة** | تقرير تصميم وتحقق فني |
+| **الإصدار** | 2.0 |
+| **الحالة** | صادرة |
+| **تاريخ الإصدار** | 2026-11-06 |
+| **التصنيف** | عام — بيئة مختبرية فقط |
+| **يحل محل** | الإصدار 1.0 (الملخص المختصر) |
+| **الترخيص** | MIT |
 
-A complete SOC lab inside VMware simulating a real corporate network:
-**6 hosts** across **3 segmented networks**, protected by **7 defense layers**,
-tested with **5 documented attack scenarios**.
-
-> مشروع جماعي ضمن فريق من أربعة · A team project by four members
+> **سياسة اللغة:** واجهة المستودع وسياساته بالعربية. الوثائق التقنية التفصيلية في مجلد `docs/` بالإنجليزية وفق صياغة المواصفات الدولية، لتبقى قابلة للاستشهاد والمراجعة من أي جهة.
 
 ---
 
-## المخطط · Architecture
+## 1. الملخص
+
+يوثّق هذا المستودع تصميم وتنفيذ والتحقق من مختبر مركز عمليات أمنية (SOC) داخل بيئة افتراضية معزولة بالكامل. يحاكي المختبر شبكة مؤسسة صغيرة تتكوّن من **ستة أجهزة افتراضية** موزّعة على **ثلاث شبكات مفصولة**، محمية بـ **سبع طبقات دفاع متتالية**، ومزوّدة بـ **أربع عشرة قاعدة كشف شبكي** كُتبت خصيصاً لهذا الغرض.
+
+اختُبرت منظومة الضوابط مقابل **خمسة سيناريوهات هجوم موثّقة** نُفّذت من شبكة مهاجم مخصّصة وبتصريح صريح. كُشفت السيناريوهات الخمسة جميعاً، وأنتجت القياسات عن بُعد **أكثر من عشرين نوع تنبيه مميّز**. ورُبطت النتائج بقاعدة معرفة MITRE ATT&CK Enterprise، وأُجريت مطابقة مرجعية مع ISO/IEC 27001:2022 و PCI DSS v4.0 و CIS Controls v8.1.
+
+**الخلاصة الهندسية الأساسية:** قدرة الكشف خاصية **تكامل** لا خاصية أدوات. فالفحص المحيطي وحوكمة الهوية والتحكّم في الجهاز والتحليل المركزي يرى كل منها صورة جزئية، ولا تكتمل الصورة القابلة للتنفيذ إلا بربطها معاً.
+
+---
+
+## 2. النطاق
+
+### 2.1 داخل النطاق
+
+- تصميم معمارية الشبكة وفصل الشبكات
+- الضوابط الوقائية والكشفية والاستجابية متعددة الطبقات
+- هندسة قواعد الكشف الشبكي المخصّصة
+- الجمع المركزي للسجلات والربط بينها
+- محاكاة المهاجم المصرّح بها والتحقق من الكشف
+- المطابقة المرجعية مع أطر الضوابط
+
+### 2.2 خارج النطاق
+
+- النشر الإنتاجي وهندسة التوافرية (Availability) والتخطيط للسعة
+- إنتاج استخبارات التهديدات ونسب الهجمات
+- الهندسة العكسية للبرمجيات الخبيثة
+- تقييم أي نظام تابع لجهة أخرى أو أي نظام عام
+
+### 2.3 بيان التصريح
+
+نُفّذت كل الأنشطة الهجومية الموصوفة هنا **حصراً داخل بيئة مختبرية معزولة من نوع host-only يملكها فريق المشروع**، وعلى أنظمة أُنشئت لهذا الغرض. لم يكن أي نظام إنتاجي أو أصل تابع لجهة أخرى أو نطاق عناوين عام أو بيانات طرف ثالث جزءاً من العمل في أي مرحلة.
+
+---
+
+## 3. بنية المستودع
+
+```
+.
+├── README.md                          نظرة عامة ونتائج (هذه الوثيقة — عربي)
+├── SECURITY.md                        سياسة الإفصاح وشروط السلامة المختبرية (عربي)
+├── CONTRIBUTING.md                    إجراءات المساهمة والمراجعة (عربي)
+├── CHANGELOG.md                       تاريخ المراجعات (عربي)
+├── CITATION.cff                       بيانات الاستشهاد (إنجليزي — صيغة معيارية)
+├── LICENSE                            ترخيص MIT
+├── docs/                              الوثائق التقنية — إنجليزي
+│   ├── 00-document-control.md         سجل الوثائق وتاريخ المراجعات
+│   ├── 01-architecture.md             معمارية الشبكة والأجهزة
+│   ├── 02-defense-layers.md           تصميم الضوابط — الطبقات 1 إلى 7
+│   ├── 03-detection-engineering.md    كتالوج القواعد وخط السجلات
+│   ├── 04-validation-and-results.md   خطة الاختبار والنتائج ومطابقة ATT&CK
+│   ├── 05-control-framework-mapping.md مطابقة ISO / PCI DSS / CIS
+│   ├── 06-operations-runbook.md       إجراءات الفرز والاستجابة
+│   ├── 07-limitations-and-roadmap.md  القيود المعلنة وخطة العمل
+│   ├── 08-glossary.md                 المصطلحات والاختصارات
+│   ├── 09-references.md               المراجع المعيارية والإرشادية
+│   ├── network-diagram.png            الشكل 1 — مخطط المختبر
+│   ├── social-preview.png             صورة غلاف المستودع
+│   └── screenshots/                   الأشكال 2 إلى 4 — أدلة التنفيذ
+└── rules/
+    └── README.md                      سجل القواعد (إنجليزي) — SID 1000001–1000014
+```
+
+---
+
+## 4. ملخص المعمارية
+
+يعمل المختبر على hypervisor واحد من نوع VMware، ومقسّم إلى ثلاث مناطق ثقة. يعبر الترافيك بين المناطق جدار الحماية بحكم التصميم، ولا يوجد مسار تجاوز.
+
+| المنطقة | العنونة | نوع الشبكة | الوظيفة |
+|:---|:---|:---|:---|
+| `WAN` | عناوين NAT | NAT | عبور خارجي محاكى |
+| `LAN` | `10.10.10.0/24` | Host-only | منطقة المؤسسة: الدليل، التحليلات، الجهاز |
+| `UNTRUST` | `10.10.40.0/24` | Host-only | منطقة المهاجم المعزولة |
 
 <div align="center">
-<img src="docs/network-diagram.png" width="820" alt="Lab network diagram">
+<img src="docs/network-diagram.png" width="820" alt="الشكل 1 — مخطط شبكة المختبر">
+<br>
+<sub><b>الشكل 1.</b> مخطط شبكة المختبر وحدود مناطق الثقة.</sub>
 </div>
 
-| الشبكة | النوع | الغرض |
-|---|---|---|
-| `WAN` | NAT | الإنترنت — ومنها تُنفّذ الهجمات |
-| `LAN` | Host-only | شبكة الشركة: DC، SIEM، HIDS، محطة عمل |
-| `UNTRUST` | Host-only | شبكة المهاجم المعزولة |
+تعمل خدمات الدليل تحت نطاق المختبر المحجوز `corp.test`. جرد الأجهزة الكامل وتعيين الواجهات موصوفان في [`docs/01-architecture.md`](docs/01-architecture.md).
 
 ---
 
-## طبقات الدفاع · Defense Layers
+## 5. طبقات الدفاع
 
-| # | الطبقة | الأدوات |
-|---|---|---|
-| 1 | المحيط · Perimeter | pfSense + Snort |
-| 2 | الهوية · Identity | Active Directory + Group Policy |
-| 3 | الجهاز · Endpoint | AppLocker · USB restrictions · Sysmon |
-| 4 | الإدارة · Management | Endpoint Central |
-| 5 | التدقيق · Audit | ADAudit Plus |
-| 6 | الرؤية · Visibility | Splunk + Wazuh |
-| 7 | الاستجابة · Response | Auto-block + GPO + Wazuh Active Response |
+| الطبقة | المجال | القدرة المنفّذة |
+|:---:|:---|:---|
+| 1 | المحيط · Perimeter | تطبيق سياسات pfSense مع فحص Snort المباشر |
+| 2 | الهوية · Identity | Active Directory Domain Services مع سبع سياسات مجموعة (GPO) |
+| 3 | الجهاز · Endpoint | التحكّم في التطبيقات، تقييد الوسائط القابلة للإزالة، قياسات Sysmon |
+| 4 | الإدارة · Management | إدارة مركزية للأجهزة وتنسيق التحديثات |
+| 5 | التدقيق · Audit | تدقيق تغييرات الدليل ومراقبة المجموعات ذات الصلاحيات |
+| 6 | الرؤية · Visibility | ربط Splunk Enterprise وكشف Wazuh على مستوى الجهاز |
+| 7 | الاستجابة · Response | حجب آلي للعناوين واحتواء مدفوع بالسياسات |
 
----
-
-## قواعد الكشف · Detection Rules
-
-**14 قاعدة مخصصة** فوق أكثر من 10,000 قاعدة جاهزة (Talos VRT · GPLv2 · ET Open · OpenAppID).
-
-| SID | الكشف |
-|---|---|
-| `1000001` | ICMP / Ping Scan |
-| `1000002-4` | Nmap SYN · XMAS · NULL |
-| `1000005` | RDP Brute Force |
-| `1000006` | SMB Lateral Movement |
-| `1000007` | SSH Brute Force |
-| `1000009` | DNS to C2 |
-| `1000010` | Data Exfiltration |
-| `1000013-14` | Telnet · FTP cleartext |
-
-القواعد كاملة في [`rules/local.rules`](rules/local.rules)
+أهداف الضوابط ومبررات الإعداد والمخاطر المتبقية موثّقة لكل طبقة في [`docs/02-defense-layers.md`](docs/02-defense-layers.md).
 
 ---
 
-## سيناريوهات الاختبار · Attack Scenarios
+## 6. تغطية الكشف
 
-| # | السيناريو | كيف كُشف |
-|---|---|---|
-| 1 | فحص منافذ SYN | Snort → Splunk dashboard |
-| 2 | قوة غاشمة على RDP | Snort + Event `4625` + ADAudit alert |
-| 3 | نسخ بيانات إلى USB | GPO block + Event `4663` |
-| 4 | تطبيق غير مصرّح به | AppLocker + Event `8004` + Wazuh |
-| 5 | تصعيد صلاحيات | Event `4728` + ADAudit critical alert |
+تُكمِل **أربع عشرة قاعدة مخصّصة** (`SID 1000001`–`1000014`) حزم القواعد العامة المشتركة. ويُستمد الكشف على مستوى الجهاز من قنوات أحداث Windows Security و Sysmon ومن قياسات وكلاء Wazuh.
 
-**النتيجة:** أكثر من 20 نوع تنبيه، موثّقة وفق MITRE ATT&CK.
+| معرّف الحدث | القناة | غرض الكشف |
+|:---|:---|:---|
+| `4625` | Windows Security | فشل تسجيل دخول — تخمين بيانات اعتماد |
+| `4663` | Windows Security | محاولة وصول إلى كائن — كتابة على وسيط قابل للإزالة |
+| `8004` | AppLocker | محاولة تنفيذ تطبيق مقيّد |
+| `4728` | Windows Security | إضافة عضو إلى مجموعة أمنية عامة |
 
----
-
-## الدرس · The Lesson
-
-> الأدوات وحدها لا تصنع مركز عمليات أمنية — الربط بينها هو ما يصنعه.
-> *Tools alone don't make a SOC. Connecting them does.*
-
-جدار الحماية وحده لا يرى الداخل. وSIEM وحده لا يمنع. ومراقبة الجهاز وحدها لا تفهم الشبكة.
+سجل القواعد الكامل في [`rules/README.md`](rules/README.md)، وخط السجلات وتصميم الفهارس موصوفان في [`docs/03-detection-engineering.md`](docs/03-detection-engineering.md).
 
 ---
 
-## محتويات المستودع · Repository Contents
+## 7. نتائج التحقق
 
-```
-├── docs/
-│   ├── network-diagram.png
-│   ├── report.pdf              ← التقرير الكامل (33 صفحة)
-│   └── screenshots/            ← لقطات حقيقية من المختبر
-├── rules/
-│   └── local.rules             ← 14 قاعدة Snort مخصصة
-├── configs/
-│   ├── gpo/                    ← سياسات المجموعة السبع
-│   └── splunk/                 ← تعريفات الفهارس
-└── scenarios/                  ← خطوات كل سيناريو ونتيجته
-```
+نُفّذت خمسة سيناريوهات من منطقة `UNTRUST`. كان لكل سيناريو أثر كشفي متوقّع **مُعلن قبل التنفيذ**، وسُجّلت النتائج مقابل هذا التوقّع.
 
----
+| # | السيناريو | تقنية ATT&CK | نتيجة الكشف |
+|:---:|:---|:---|:---|
+| 1 | استكشاف الخدمات بـ TCP SYN | [T1046](https://attack.mitre.org/techniques/T1046/) | كُشف — تنبيه Snort مربوط في Splunk |
+| 2 | تخمين بيانات اعتماد RDP | [T1110.001](https://attack.mitre.org/techniques/T1110/001/) | كُشف — قاعدة Snort، الحدث `4625`، تنبيه تدقيق الدليل |
+| 3 | محاولة تسريب عبر وسيط قابل للإزالة | [T1052.001](https://attack.mitre.org/techniques/T1052/001/) | مُنع وسُجّل — حجب بالسياسة، الحدث `4663` |
+| 4 | تنفيذ تطبيق غير مصرّح به | [T1204.002](https://attack.mitre.org/techniques/T1204/002/) | مُنع وسُجّل — AppLocker، الحدث `8004`، تنبيه Wazuh |
+| 5 | تصعيد صلاحيات عبر عضوية مجموعة | [T1098](https://attack.mitre.org/techniques/T1098/) | كُشف — الحدث `4728`، تنبيه حرج من تدقيق الدليل |
 
-## إخلاء مسؤولية · Disclaimer
+**النتيجة:** 5 من 5 سيناريوهات أنتجت الأثر الكشفي المتوقّع، ولوحظ أكثر من عشرين نوع تنبيه مميّز خلال دورة التحقق.
 
-كل الاختبارات نُفّذت داخل **بيئة مختبرية معزولة ومصرّح بها** بالكامل.
-لا أنظمة حقيقية، لا بيانات لأحد، لا عناوين عامة.
-
-All testing was performed in a **fully isolated, authorized lab environment**.
-No real systems. No third-party data. No public targets.
+ظروف الاختبار ومعايير القبول والأدلة لكل سيناريو مسجّلة في [`docs/04-validation-and-results.md`](docs/04-validation-and-results.md).
 
 ---
 
-## الفريق · Team
+## 8. أدلة التنفيذ
 
-مشروع جماعي من أربعة أعضاء، بإشراف د. نور الدين الجراتلي.
-*A four-member team project, supervised by Dr. Noureddine Al-Jaradi.*
+<div align="center">
+<img src="docs/screenshots/01-pfsense-interfaces.png" width="760" alt="الشكل 2 — تعيين واجهات جدار الحماية">
+<br>
+<sub><b>الشكل 2.</b> تعيين واجهات جدار الحماية الذي يُنشئ مناطق الثقة الثلاث.</sub>
+<br><br>
+<img src="docs/screenshots/02-snort-settings.png" width="760" alt="الشكل 3 — إعداد فحص Snort">
+<br>
+<sub><b>الشكل 3.</b> إعداد واجهة Snort وتحويل التنبيهات إلى المجمّع المركزي.</sub>
+<br><br>
+<img src="docs/screenshots/03-splunk-indexes.png" width="760" alt="الشكل 4 — إدارة فهارس Splunk">
+<br>
+<sub><b>الشكل 4.</b> شاشة إدارة الفهارس في Splunk Enterprise. تُظهر اللقطة الصفحة الأولى من قائمة الفهارس، وتظهر الفهارس المبنية خصيصاً في الصفحة التالية.</sub>
+</div>
+
+---
+
+## 9. أهم النتائج
+
+1. **التكامل هو ما يحدّد قدرة الكشف.** الفحص المحيطي لا يرى النشاط الأفقي داخل الأجهزة، و SIEM لا يطبّق سياسة، ومراقبة الجهاز لا تفهم قصد الشبكة. الربط بين الثلاثة هو الضابط الفعلي.
+2. **الضابط غير المُختبَر ضابط غير مُتحقَّق منه.** ظهرت فجوتان في الضوابط فقط لأن الفريق نفّذ نشاطاً هجومياً على تصميمه بنفسه. مراجعة الإعدادات وحدها لم تكن لتكشفهما.
+3. **المنع والكشف مكمّلان لا بديلان.** السيناريوهان 3 و 4 مُنعا بالسياسة، ومع ذلك بقي سجل التدقيق ضرورياً لتحديد حجم المحاولة.
+4. **محاكاة المهاجم المصرّح بها نشاط تصميمي.** إعلان التوقّعات الكشفية قبل التنفيذ حوّل التمرين من استعراض إلى قياس.
+
+---
+
+## 10. القيود
+
+يوثّق هذا المستودع تنفيذاً مختبرياً، وهو **ليس** معمارية مرجعية للإنتاج. القيود المعروفة — تركّز كل المناطق على hypervisor واحد، غياب فحص الترافيك المشفّر، قِصر مدة خط الأساس، وتعليق نشر ملف القواعد الخام — مذكورة صراحة في [`docs/07-limitations-and-roadmap.md`](docs/07-limitations-and-roadmap.md).
+
+---
+
+## 11. النسب
+
+نُفّذ المشروع بواسطة **فريق هندسي من أربعة أعضاء** تحت إشراف أكاديمي، ويُنشر كجزء من سلسلة **طبقات · LAYERS** التقنية، الحلقة 01.
+
+الأسماء الفردية محجوبة في هذه النسخة العامة. ولا تنطبق هنا مسألة هوية عميل أو جهة، إذ لم تكن أي جهة تجارية طرفاً في العمل.
+
+---
+
+## 12. الترخيص
+
+صادر تحت ترخيص MIT. انظر [`LICENSE`](LICENSE).
+
+تحتفظ حزم القواعد العامة المشتركة بتراخيصها الخاصة (Cisco Talos VRT، قواعد المجتمع GPLv2، Emerging Threats Open). ولا يُعاد توزيع أي محتوى من هذه الحزم في هذا المستودع.
 
 ---
 
 <div align="center">
 
-**[السلسلة على LinkedIn ←](https://www.linkedin.com/in/ammar-almosbahi-963706381/)**
-
-MIT License
+<sub>طبقات · LAYERS — الأمن السيبراني، طبقة بطبقة · الحلقة 01</sub>
 
 </div>

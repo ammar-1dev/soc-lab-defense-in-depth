@@ -1,15 +1,60 @@
-# VM images & disks
-*.vmdk *.vmx *.nvram *.vmsd *.vmsn *.vmss *.vmem *.ova *.ovf *.iso *.qcow2
+# ── Virtual machine images and disk files ─────────────────────────
+*.vmdk
+*.vmx
+*.nvram
+*.vmsd
+*.vmsn
+*.vmss
+*.vmem
+*.ova
+*.ovf
+*.iso
+*.qcow2
+*.vdi
+*.vhd
+*.vhdx
 Snapshots/
 
-# Secrets & configs
-.env *.env .env.* *.pem *.key *.p12 *.pfx
-secrets/ credentials/ config.local.*
+# ── Credentials and secret material ──────────────────────────────
+.env
+.env.*
+*.env
+*.pem
+*.key
+*.p12
+*.pfx
+*.ppk
+id_rsa*
+secrets/
+credentials/
+config.local.*
+*.kdbx
 
-# Raw captures & logs
-*.pcap *.pcapng *.evtx *.log
+# ── Raw captures and event exports ───────────────────────────────
+*.pcap
+*.pcapng
+*.cap
+*.evtx
+*.log
 logs/
+captures/
 
-# OS / editor
-.DS_Store Thumbs.db desktop.ini
-.vscode/ .idea/ *.swp
+# ── Third-party ruleset content (licence restricted) ─────────────
+rules/*.rules
+!rules/example.rules
+rulesets/
+*.tar.gz
+
+# ── Reports containing unredacted content ────────────────────────
+drafts/
+unredacted/
+
+# ── Operating system and editor artefacts ────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
